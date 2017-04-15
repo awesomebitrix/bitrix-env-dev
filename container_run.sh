@@ -3,36 +3,23 @@
 
 # USE the trap if you need to also do manual cleanup after the service is stopped,
 #     or need to start multiple services in the one container
-trap "shut_down" HUP INT QUIT KILL TERM
 
-shut_down(){  
-# stop service and clean up here
+trap "shutdownSystem" HUP INT QUIT KILL TERM
 
-if [[ $NOMYSQL == 1 ]];
-then
-    echo "No sql"
-else
-    service mysqld stop
-fi
+shutdownSystem()
+{  
+	# stop service and clean up here
 
-service nginx stop
-service httpd stop
-service sshd stop
-service crond stop
-
+	service nginx stop
+	service httpd stop
+	service sshd stop
+	service crond stop
 }
 
 # start service in background here
 # memory=${BVAT_MEM:=262144}
 
 /etc/init.d/bvat start
-
-if [[ $NOMYSQL == 1 ]];
-then
-    echo "No sql"
-else
-    service mysqld start
-fi
 
 if [ ! -z "$TIMEZONE" ];
 then
@@ -49,7 +36,6 @@ echo "bitrix:$SSH_PASS" | chpasswd
 echo "[hit enter key to exit] or run 'docker stop <container>'"
 read _
 
-shut_down
+shutdownSystem
 
 echo "exited $0"
-
