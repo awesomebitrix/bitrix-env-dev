@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:6.6
 
 # installing bitrix environment
 ADD http://repos.1c-bitrix.ru/yum/bitrix-env.sh /tmp/
@@ -15,18 +15,27 @@ RUN yum update -y
 # installing ssh-server
 RUN yum install -y openssh-server
 
-# setting default memory limit for bitrix env
+# installing nano editor
+RUN yum install -y nano
+
+# setting up simple xdebug config, this configuration allows everyone to start xdebug session.
+RUN touch /etc/php.d/15-xdebug.ini && echo "[xdebug]" >> /etc/php.d/15-xdebug.ini && echo "zend_extension='/usr/lib64/php/modules/xdebug.so'" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_enable = 1" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_connect_back = 1" >> /etc/php.d/15-xdebug.ini
+
+# setting default memory limit for bitrix env machine
 WORKDIR /etc/init.d
 RUN sed -i 's/memory=`free.*/memory=$\{BVAT_MEM\:\=262144\}/gi' bvat
 
-# setting auth data for ssh
-ENV SSH_PASS="bitrix"
-RUN echo "bitrix:$SSH_PASS" | chpasswd
+# auth data for ROOT user
+ENV ROOT_SSH_PASS="123"
+RUN echo "root:$ROOT_SSH_PASS" | chpasswd
+
+# auth data for BITRIX user
+ENV BITRIX_SSH_PASS="bitrix"
+RUN echo "bitrix:$BITRIX_SSH_PASS" | chpasswd
 
 # setting right timezone
 ENV TIMEZONE="Europe/Minsk"
 RUN cp -f /usr/share/zoneinfo/$TIMEZONE /etc/localtime
-RUN date
 
 # starting script, when container is ready (entrypoint)
 WORKDIR /

@@ -1,14 +1,17 @@
 #!/bin/sh
-# Note: Entry point to birix container
-
-# USE the trap if you need to also do manual cleanup after the service is stopped,
-#     or need to start multiple services in the one container
 
 trap "shutdownSystem" HUP INT QUIT KILL TERM
 
 shutdownSystem()
 {  
 	# stop service and clean up here
+
+	if [[ $NOMYSQL == 1 ]];
+	then
+	    echo "Internal MySQL is offline (NOMYSQL=1)"
+	else
+	    service mysqld stop
+	fi
 
 	service nginx stop
 	service httpd stop
@@ -21,6 +24,13 @@ shutdownSystem()
 
 /etc/init.d/bvat start
 
+if [[ $NOMYSQL == 1 ]];
+then
+    echo "Internal MySQL is offline. Use your own DB-server instead... (NOMYSQL=1)"
+else
+    service mysqld start
+fi
+
 if [ ! -z "$TIMEZONE" ];
 then
     cp -f /usr/share/zoneinfo/$TIMEZONE /etc/localtime 
@@ -31,7 +41,8 @@ service httpd start
 service nginx start
 service sshd start
 
-echo "bitrix:$SSH_PASS" | chpasswd
+echo "root:$ROOT_SSH_PASS" | chpasswd
+echo "bitrix:$BITRIX_SSH_PASS" | chpasswd
 
 echo "[hit enter key to exit] or run 'docker stop <container>'"
 read _
