@@ -1,4 +1,4 @@
-# BitrixVM + dev tools
+# Песочница для разработчиков на BitrixVM
 
 Docker-образ, внутри которого CentOS 6.6 + BitrixVM.
 
