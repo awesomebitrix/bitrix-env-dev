@@ -28,7 +28,7 @@ Docker-образ, внутри которого CentOS 6.6 + BitrixVM.
    docker build -t hybr1dmax/bitrix-env-dev . 
 ```
 По-умолчанию, BitrixVM будет идти комплекте с php7.
-Если вам требуется php5, укажите параметр специальный параметр **_IS_LEGACY_PHP=1_**
+Если вам требуется php5, укажите специальный параметр **_IS_LEGACY_PHP=1_**
 
 ```bash
    docker build --build-arg IS_LEGACY_PHP=1 -t hybr1dmax/bitrix-env-dev:php5 .
