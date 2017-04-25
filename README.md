@@ -14,17 +14,26 @@ Docker-образ, внутри которого CentOS 6.6 + BitrixVM.
 
 Клонируем себе на Linux-машину данный репозиторий:
 
+
 ```bash
+   mkdir ~/Docker
+   cd ~/Docker
    git clone git@github.com:hybr1dmax/bitrix-env-dev.git
+   cd bitrix-env-dev
 ```
+
 Начинаем сборку образа по докерфайлу:
+
 ```bash
    docker build -t hybr1dmax/bitrix-env-dev . 
 ```
+
 Если нужна BitrixVM с php5, вместо php7 (по-умолчанию), укажите параметр специальный параметр **_IS_LEGACY_PHP=1_**
+
 ```bash
    docker build --build-arg IS_LEGACY_PHP=1 -t hybr1dmax/bitrix-env-dev:php5 .
 ```
+
 Сборка образа может занять несколько минут, всё зависит от вашей скорости соединения.
 
 ## Запуск
