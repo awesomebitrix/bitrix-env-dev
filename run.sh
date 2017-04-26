@@ -4,17 +4,17 @@ trap "shutdownSystem" HUP INT QUIT KILL TERM
 
 shutdownSystem()
 {  
-	# stop service and clean up here
+    # stop service and clean up here
 
-	if [[ $NOMYSQL -ne 1 ]];
-	then
-	    service mysqld stop
-	fi
+    if [[ $NOMYSQL -ne 1 ]];
+    then
+        service mysqld stop
+    fi
 
-	service nginx stop
-	service httpd stop
-	service sshd stop
-	service crond stop
+    service nginx stop
+    service httpd stop
+    service sshd stop
+    service crond stop
 }
 
 startConfigurationTask()
