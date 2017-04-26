@@ -20,8 +20,8 @@ RUN touch /etc/php.d/15-xdebug.ini && echo "[xdebug]" >> /etc/php.d/15-xdebug.in
 WORKDIR /etc/init.d
 RUN sed -i '/AVAILABLE_MEMORY=$(free/c\AVAILABLE_MEMORY=262144' bvat
 
-# installing ssh-server and nano-editor
-RUN yum install -y openssh-server nano mc
+# installing ssh-server + useful apps
+RUN yum install -y openssh-server nano mc htop
 
 # this variable is useful, when your project contains multiple site under one licence
 ENV MULTISITE_ID=0
