@@ -39,5 +39,5 @@ WORKDIR /
 ADD run.sh /
 RUN chmod +x /run.sh
 
-# run.sh will fire every container start
+# run.sh will fire every time, when container has started
 ENTRYPOINT exec /run.sh
