@@ -42,7 +42,7 @@ docker network create --subnet=10.10.0.0/16 my-docker-network
 Если вам требуется php5, укажите специальный параметр **_IS_LEGACY_PHP=1_**
 
 ```bash
-   docker build --build-arg IS_LEGACY_PHP=1 -t hybr1dmax/bitrix-env-dev:php5 .
+   docker build --build-arg IS_LEGACY_PHP=1 -t hybr1dmax/bitrix-env-dev .
 ```
 
 Сборка образа может занять несколько минут, всё зависит от вашей скорости соединения.
