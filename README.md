@@ -1,15 +1,30 @@
-# Песочница для разработчиков на BitrixVM
+# Подготовка
 
-Docker-образ, внутри которого CentOS 6.6 + BitrixVM.
+Данный образ позволяет быстро развернуть копию веб-проекта на системе 1С-Битрикс.
+Для старта нам понадобится:
 
-Добавлен конфиг XDebug, дополнительно установлены ssh, nano, mc.
+* дамп базы целевого веб-проекта
+* все файлы веб-проекта, включая ядро битрикс /bitrix/
+* создать кастомную подсеть в docker, чтобы самим решать по какому ip будет доступна наша песочницаю
 
-Есть возможность развернуть несколько проектов в режиме родной многосайтовости.
+Предположим, что:
+
+* дамп базы вы уже скачали и он лежит в папке:
+ ```bash
+ ~/bitrix-project-source/database-dump.sql
+ ```
+* файлы проекта тоже имеете при себе и они располагаются по адресу:
+```bash
+~/bitrix-project-source/files/
+```
+Создаем подсеть:
+```bash
+docker network create --subnet=10.10.0.0/16 my-docker-network
+```
 
 ## Сборка
 
-Клонируем себе на Linux-машину репозиторий:
-
+Клонируем себе на Linux-машину исходники для сборки образа:
 
 ```bash
    mkdir ~/Docker
@@ -32,6 +47,54 @@ Docker-образ, внутри которого CentOS 6.6 + BitrixVM.
 
 Сборка образа может занять несколько минут, всё зависит от вашей скорости соединения.
 
+Давайте посмотрим, что у нас вышло:
+```bash
+$ docker images
+REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
+hybr1dmax/bitrix-env-dev   php5                2bdc7287012f        2 days ago          1.2GB
+centos                     6.6                 d03626170061        8 months ago        203MB
+```
+
+Образ на месте, пока создавать контейнер от получившегося образа.
+
 ## Запуск
 
-Раздел в разработке....
+Создаем папку containers, в которую будем помещать bash-скрипты для более удобного запуска и перезапуска контейнеров:
+```bash
+   mkdir containers
+   cd containers/
+   touch sandbox_run.sh
+```
+
+Вставляем в sandbox_run.sh следующее содержимое и сохраняем:
+```bash
+   #!/bin/sh
+   
+   docker stop sandbox.local;
+   docker rm sandbox.local;
+   
+   docker run -itd \
+   -h sandbox.local \
+   --name sandbox.local \
+   --net=my-docker-network --ip=10.10.0.2 \
+   -e BITRIX_SSH_PASS="bitrix_passphrase" \
+   -e ROOT_SSH_PASS="root_passphrase" \
+   -e BITRIX_DB_PASS="database_user_passphrase" \
+   -e DB_NAME="database_name" \
+   -v /home/bitrix/Docker/Volumes/plus.evtu.by:/home/bitrix/www \
+   hybr1dmax/bitrix-env-dev:php5;
+```
+Как видите, мы будем подключать наш контейнер к подсети _my-docker-network_ и выставлять ему ip _10.10.0.2_. Это нужно для того, чтобы обращаться к нашему контейнеру по доменному имени, а не по ip.
+
+
+Добавляем в свой /etc/hosts запись о новом контейнере:
+```bash
+   $ sudo echo "sandbox.local 10.10.0.2" >> /etc/hosts
+```
+
+А теперь самое интересное - запуск:
+```bash
+    bash ./sandbox_run.sh
+```
+
+Продолжение следует...
