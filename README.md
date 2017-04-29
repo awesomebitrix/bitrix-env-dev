@@ -88,7 +88,7 @@ centos                     6.6                 d03626170061        8 months ago 
    -e BITRIX_DB_PASS="database_user_passphrase" \
    -e DB_NAME="database_name" \
    -v ~/bitrix-project-source/files:/home/bitrix/www \
-   hybr1dmax/bitrix-env-dev:php5;
+   hybr1dmax/bitrix-env-dev;
 ```
 Как видите, мы будем подключать наш контейнер к подсети _my-docker-network_ и выставлять ему IP _10.10.0.2_. Это нужно для того, чтобы обращаться к нашему контейнеру по доменному имени, а не по IP.
 
