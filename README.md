@@ -51,7 +51,7 @@ docker network create --subnet=10.10.0.0/16 my-docker-network
 ```bash
 $ docker images
 REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
-hybr1dmax/bitrix-env-dev   php5                2bdc7287012f        2 days ago          1.2GB
+hybr1dmax/bitrix-env-dev   latest              2bdc7287012f        2 days ago          1.2GB
 centos                     6.6                 d03626170061        8 months ago        203MB
 ```
 
