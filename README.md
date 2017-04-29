@@ -19,7 +19,7 @@
 ```
 Создаем подсеть:
 ```bash
-    docker network create --subnet=10.10.0.0/16 my-docker-network
+    $ docker network create --subnet=10.10.0.0/16 my-docker-network
 ```
 
 ## Сборка
@@ -27,22 +27,22 @@
 Клонируем себе на Linux-машину исходники для сборки образа:
 
 ```bash
-    mkdir ~/Docker
-    cd ~/Docker
-    git clone git@github.com:hybr1dmax/bitrix-env-dev.git
-    cd bitrix-env-dev
+    $ mkdir ~/Docker
+    $ cd ~/Docker
+    $ git clone git@github.com:hybr1dmax/bitrix-env-dev.git
+    $ cd bitrix-env-dev
 ```
 
 Начинаем сборку образа по докерфайлу:
 
 ```bash
-    docker build -t hybr1dmax/bitrix-env-dev . 
+    $ docker build -t hybr1dmax/bitrix-env-dev . 
 ```
 По-умолчанию, BitrixVM будет идти комплекте с php7.
 Если вам требуется php5, укажите специальный параметр **_IS_LEGACY_PHP=1_**
 
 ```bash
-    docker build --build-arg IS_LEGACY_PHP=1 -t hybr1dmax/bitrix-env-dev .
+    $ docker build --build-arg IS_LEGACY_PHP=1 -t hybr1dmax/bitrix-env-dev .
 ```
 
 Сборка образа может занять несколько минут, всё зависит от вашей скорости соединения.
@@ -61,14 +61,14 @@
 
 Создаем папку containers, в которую будем помещать bash-скрипты для более удобного запуска и перезапуска контейнеров:
 ```bash
-    mkdir containers
-    cd containers/
+    $ mkdir containers
+    $ cd containers/
 ```
 
 
 Создаем скрипт для нашего проекта:
 ```bash
-    touch sandbox_run.sh
+    $ touch sandbox_run.sh
 ```
 
 Вставляем в него следующее содержимое:
@@ -99,7 +99,7 @@
 
 А теперь самое интересное - запуск:
 ```bash
-    bash ./sandbox_run.sh
+    $ bash ./sandbox_run.sh
 ```
 
 Продолжение следует...
