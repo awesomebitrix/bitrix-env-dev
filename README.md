@@ -146,8 +146,8 @@ _docker run_ и _docker rm_ уничтожают контейнер, если м
 * **_-v ~/bitrix-project-source/files:/home/bitrix/www_** монтируем папку с нашим проектом внутрь контейнера
 
 Также доступны дополнительные опции:
-* **_-e CYRILLIC_MODE=1_** если ваш проект в кодировке windows 1251: это перенастроит mbstring.func_overload и mbstring.internal_encoding в настройках php
-* **_DB_ADDITIONAL_PARAMS="character set cp1251"_** значение этого параметра передастся в конец запроса _CREATE DATABASE_ сервера базы
+* **_-e CYRILLIC_MODE=1_** если ваш проект в кодировке windows-1251, то эта опция позволит перенастроить mbstring.func_overload и mbstring.internal_encoding в настройках php
+* **_DB_ADDITIONAL_PARAMS="character set cp1251"_** значение этого параметра добавится в конец запроса _CREATE DATABASE_, при создании контейнера.
 
 #### DNS
 
@@ -164,7 +164,10 @@ _docker run_ и _docker rm_ уничтожают контейнер, если м
     $ mysql -h sandbox.local -u bitrix -p database_name < ~/bitrix-project-source/database-dump.sql
 ```
 
-Не забываем поправить файлы dbconn.php и .settings.php, указав в них нужные доступы и настройки подключения.
+Не забываем поправить настройки базы данных в dbconn.php и .settings.php, а именно:
+* логин пользователя (bitrix)
+* пароль пользователя
+* хостнейм сервера базы данных (_sandbox.local_ или _localhost_)
 
 
 ### Запуск
@@ -173,4 +176,4 @@ _docker run_ и _docker rm_ уничтожают контейнер, если м
     $ bash ./sandbox_run.sh
 ```
 
-После этого можно подключаться к нашему контейнеру по хостнейму _sandbox.local_
+После этого можно подключаться к нашему контейнеру через _sandbox.local_
