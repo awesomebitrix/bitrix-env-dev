@@ -142,11 +142,11 @@ _docker run_ и _docker rm_ уничтожают контейнер, если м
 * **_-e BITRIX_SSH_PASS="bitrix_passphrase"_** переопределяем стандартный пароль к системному юзеру bitrix
 * **_-e ROOT_SSH_PASS="root_passphrase"_** переопределяем стандартный пароль к системному юзеру root
 * **_-e BITRIX_DB_PASS="database_user_passphrase"_** переопределяем стандартный пароль к юзеру bitrix встроенного mysql-сервера
-* **_-e DB_NAME="database_name"_** если указано, и если не указан параметр NOMYSQL=1, то создаем базу данных с указанным именем
+* **_-e DB_NAME="database_name"_** если указано, и если не указан параметр _NOMYSQL=1_, то создаем базу данных с указанным именем
 * **_-v ~/bitrix-project-source/files:/home/bitrix/www_** монтируем папку с нашим проектом внутрь контейнера
 
 Также доступны дополнительные опции:
-* **_-e CYRILLIC_MODE=1_** если ваш проект в кодировке windows-1251, то эта опция позволит перенастроить mbstring.func_overload и mbstring.internal_encoding в настройках php
+* **_-e CYRILLIC_MODE=1_** если ваш проект в кодировке _windows-1251_, то эта опция позволит перенастроить mbstring.func_overload и mbstring.internal_encoding в настройках php
 * **_DB_ADDITIONAL_PARAMS="character set cp1251"_** значение этого параметра добавится в конец запроса _CREATE DATABASE_, при создании контейнера.
 
 #### DNS
