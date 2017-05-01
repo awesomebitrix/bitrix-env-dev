@@ -27,11 +27,11 @@ RUN yum install -y openssh-server nano mc htop
 ENV MULTISITE_ID=0
 
 # setting new bitrix password for mysql
-ENV BITRIX_DB_PASS="123"
+ENV BITRIX_DB_PASS="JX6kbx8b"
 
 # auth data
-ENV ROOT_SSH_PASS="123"
-ENV BITRIX_SSH_PASS="123"
+ENV ROOT_SSH_PASS="4EyahtMj"
+ENV BITRIX_SSH_PASS="XW7ur3TB"
 RUN echo "root:$ROOT_SSH_PASS" | chpasswd && echo "bitrix:$BITRIX_SSH_PASS" | chpasswd
 
 # starting script, when container is ready (entrypoint)
