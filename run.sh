@@ -40,11 +40,11 @@ startConfigurationTask()
         service mysqld start
 
         # setting new password for mysql + allowing to connect internal mysql-server from outside
-        mysql -u root -e "use mysql; UPDATE user SET password=PASSWORD('$BITRIX_DB_PASS') WHERE User='bitrix'; flush privileges; GRANT ALL ON *.* to bitrix@'%' IDENTIFIED BY '$BITRIX_DB_PASS'; GRANT ALL ON *.* to bitrix@'localhost' IDENTIFIED BY '$BITRIX_DB_PASS';"
+        mysql -u root -e "use mysql; UPDATE user SET password=PASSWORD('$BITRIX_DB_PASS') WHERE User='bitrix'; FLUSH PRIVILEGES; GRANT ALL ON *.* to bitrix@'%' IDENTIFIED BY '$BITRIX_DB_PASS'; GRANT ALL ON *.* to bitrix@'localhost' IDENTIFIED BY '$BITRIX_DB_PASS';"
 
         if [[ ! -z "$DB_NAME" ]];
         then
-            mysql -u bitrix -p$BITRIX_DB_PASS -e "create database $DB_NAME $DB_ADDITIONAL_PARAMS";
+            mysql -u bitrix -p$BITRIX_DB_PASS -e "CREATE DATABASE $DB_NAME $DB_ADDITIONAL_PARAMS";
         fi
 
         service mysqld stop
