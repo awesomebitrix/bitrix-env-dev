@@ -14,7 +14,7 @@ RUN chmod +x /tmp/bitrix-env.sh
 RUN /tmp/bitrix-env.sh $IS_LEGACY_PHP
 
 # setting up simple xdebug config, this configuration allows everyone to start xdebug session.
-RUN touch /etc/php.d/15-xdebug.ini && echo "[xdebug]" >> /etc/php.d/15-xdebug.ini && echo "zend_extension='/usr/lib64/php/modules/xdebug.so'" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_enable = 1" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_connect_back = 1" >> /etc/php.d/15-xdebug.ini
+RUN echo "[xdebug]" > /etc/php.d/15-xdebug.ini && echo "zend_extension='/usr/lib64/php/modules/xdebug.so'" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_enable = 1" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_connect_back = 1" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_autostart = 0" >> /etc/php.d/15-xdebug.ini
 
 # setting memory limit for bitrixvm (apache, mysql, etc)
 WORKDIR /etc/init.d
