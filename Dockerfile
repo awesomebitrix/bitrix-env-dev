@@ -16,18 +16,17 @@ RUN /tmp/bitrix-env.sh $IS_LEGACY_PHP
 # setting up simple xdebug config, this configuration allows everyone to start xdebug session.
 RUN echo "[xdebug]" > /etc/php.d/15-xdebug.ini && echo "zend_extension='/usr/lib64/php/modules/xdebug.so'" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_enable = 1" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_connect_back = 1" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_autostart = 0" >> /etc/php.d/15-xdebug.ini
 
-# setting memory limit for bitrixvm (apache, mysql, etc)
+ENV BITRIX_MAX_MEMORY=262144
+
+# setting memory limit for bitrix env
 WORKDIR /etc/init.d
-RUN sed -i '/AVAILABLE_MEMORY=$(free/c\AVAILABLE_MEMORY=262144' bvat
+RUN sed -i "/AVAILABLE_MEMORY=/c\AVAILABLE_MEMORY=$BITRIX_MAX_MEMORY" bvat
 
 # installing ssh-server + useful apps
 RUN yum install -y openssh-server nano mc htop
 
 # this variable is useful, when your project contains multiple site under one licence
-ENV MULTISITE_ID=0
-
-# setting new bitrix password for mysql
-ENV BITRIX_DB_PASS="JX6kbx8b"
+ENV MULTISITE_ID=1
 
 # auth data
 ENV ROOT_SSH_PASS="4EyahtMj"

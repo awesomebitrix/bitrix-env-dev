@@ -17,8 +17,14 @@ shutdownSystem()
     service crond stop
 }
 
-startConfigurationTask()
+startConfiguration()
 {
+    # setting memory limit for bitrix env (default: 256mb)
+    sed -i "/AVAILABLE_MEMORY=/c\AVAILABLE_MEMORY=$BITRIX_MAX_MEMORY" /etc/init.d/bvat
+
+    echo "root:$ROOT_SSH_PASS" | chpasswd
+    echo "bitrix:$BITRIX_SSH_PASS" | chpasswd
+
     if [[ ! -z "$TIMEZONE" ]];
     then
         cp -f /usr/share/zoneinfo/$TIMEZONE /etc/localtime
@@ -34,26 +40,11 @@ startConfigurationTask()
         sed -i '/mbstring.func_overload/c\mbstring.func_overload = 0' /etc/php.d/bitrixenv.ini
         sed -i '/mbstring.internal_encoding/c\mbstring.internal_encoding = cp1251' /etc/php.d/bitrixenv.ini
     fi
-
-    if [[ $NOMYSQL -ne 1 ]];
-    then
-        service mysqld start
-
-        # setting new password for mysql + allowing to connect internal mysql-server from outside
-        mysql -u root -e "use mysql; UPDATE user SET password=PASSWORD('$BITRIX_DB_PASS') WHERE User='bitrix'; FLUSH PRIVILEGES; GRANT ALL ON *.* to bitrix@'%' IDENTIFIED BY '$BITRIX_DB_PASS'; GRANT ALL ON *.* to bitrix@'localhost' IDENTIFIED BY '$BITRIX_DB_PASS';"
-
-        if [[ ! -z "$DB_NAME" ]];
-        then
-            mysql -u bitrix -p$BITRIX_DB_PASS -e "CREATE DATABASE $DB_NAME $DB_ADDITIONAL_PARAMS";
-        fi
-
-        service mysqld stop
-    fi
 }
 
 if [[ ! -f "/home/bitrix/containerStarted" ]];
 then
-    startConfigurationTask
+    startConfiguration
     touch /home/bitrix/containerStarted
 fi
 
@@ -69,9 +60,6 @@ service crond start
 service httpd start
 service nginx start
 service sshd start
-
-echo "root:$ROOT_SSH_PASS" | chpasswd
-echo "bitrix:$BITRIX_SSH_PASS" | chpasswd
 
 echo "[hit enter key to exit] or run 'docker stop <container>'"
 read _
