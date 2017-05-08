@@ -166,7 +166,7 @@ https://hub.docker.com/_/mysql/
 Чтобы с нашей рабочей машины обращаться к нашему контейнеру через доменное имя, а не через айпишник, добавим в свой `/etc/hosts` запись о хостнейме `project.local`:
 ```bash
     $ su
-    # echo "10.10.0.2 project.local" >> /etc/hosts
+    echo "10.10.0.2 project.local" >> /etc/hosts
 ```
 
 Создадим свою docker-сеть:
