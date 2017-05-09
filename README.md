@@ -130,6 +130,7 @@ https://hub.docker.com/_/mysql/
 
 Также доступны другие опции:
 
+* `-e XDEBUG=1` включение отладчика xdebug
 * `-e MULTISITE_ID=2` параметр, для корректной работы многосайтовости (см. раздел `Многосайтовость`).
 * `-e CYRILLIC_MODE=1` если ваш проект в кодировке `windows-1251`, то эта опция позволит указать соответствующие `mbstring.func_overload` и `mbstring.internal_encoding` в конфигах php
 
