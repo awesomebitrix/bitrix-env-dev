@@ -30,7 +30,7 @@ startConfiguration()
         cp -f /usr/share/zoneinfo/$TIMEZONE /etc/localtime
     fi
 
-    if [[ $MULTISITE_ID -gt 0 ]];
+    if [[ $MULTISITE_ID -gt 1 ]];
     then
         find /etc/ -type f -exec sed -i "s/\/home\/bitrix\/www/\/home\/bitrix\/www${MULTISITE_ID}/g" {} \;
     fi

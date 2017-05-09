@@ -26,7 +26,7 @@ RUN sed -i "/AVAILABLE_MEMORY=/c\AVAILABLE_MEMORY=$BITRIX_MAX_MEMORY" bvat
 RUN yum install -y openssh-server nano mc htop
 
 # this variable is useful, when your project contains multiple site under one licence
-ENV MULTISITE_ID=0
+ENV MULTISITE_ID=1
 
 # auth data
 ENV ROOT_SSH_PASS="4EyahtMj"
