@@ -14,7 +14,7 @@ RUN chmod +x /tmp/bitrix-env.sh
 RUN /tmp/bitrix-env.sh $IS_LEGACY_PHP
 
 # installing ssh-server + useful apps
-RUN yum install -y openssh-server nano mc htop
+RUN yum install -y openssh-server nano mc htop zip unzip
 
 ENV BITRIX_MAX_MEMORY=262144
 
