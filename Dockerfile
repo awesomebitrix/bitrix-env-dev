@@ -2,13 +2,12 @@ FROM centos:6.6
 
 # setting right timezone
 ENV TIMEZONE="Europe/Minsk"
-RUN cp -f /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 
 # if you need php5, instead of php7, exec docker build command with "--build-arg IS_LEGACY_PHP=1"
 ARG IS_LEGACY_PHP
 ENV IS_LEGACY_PHP=${IS_LEGACY_PHP}
 
-# this is official bitrixvm install script for centos, but with my custom option to choose php version
+# this is official bitrix-env install script for centos, but with my custom option to choose php version
 ADD bitrix-env.sh /tmp/
 RUN chmod +x /tmp/bitrix-env.sh
 RUN /tmp/bitrix-env.sh $IS_LEGACY_PHP

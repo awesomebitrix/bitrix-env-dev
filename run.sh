@@ -19,6 +19,8 @@ shutdownSystem()
 
 startConfiguration()
 {
+    cp -f /usr/share/zoneinfo/$TIMEZONE /etc/localtime
+
     # setting memory limit for bitrix env (default: 256mb)
     sed -i "/AVAILABLE_MEMORY=/c\AVAILABLE_MEMORY=$BITRIX_MAX_MEMORY" /etc/init.d/bvat
 
@@ -29,11 +31,6 @@ startConfiguration()
     if [[ "$XDEBUG" -eq 1 ]];
     then
         echo "[xdebug]" > /etc/php.d/15-xdebug.ini && echo "zend_extension='/usr/lib64/php/modules/xdebug.so'" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_enable = 1" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_connect_back = 1" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_autostart = 0" >> /etc/php.d/15-xdebug.ini
-    fi
-
-    if [[ ! -z "$TIMEZONE" ]];
-    then
-        cp -f /usr/share/zoneinfo/$TIMEZONE /etc/localtime
     fi
 
     if [[ $MULTISITE_ID -gt 1 ]];
