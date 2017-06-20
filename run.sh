@@ -4,7 +4,7 @@ trap "shutdownSystem" HUP INT QUIT KILL TERM
 
 shutdownSystem()
 {  
-    # stop service and clean up here
+    # stopping services (docker stop)
 
     if [[ $NOMYSQL -ne 1 ]];
     then
@@ -19,6 +19,7 @@ shutdownSystem()
 
 startConfiguration()
 {
+    # timezone configuration
     cp -f /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 
     # setting memory limit for bitrix env (default: 256mb)
@@ -60,7 +61,7 @@ then
     touch /home/bitrix/configurationComplete
 fi
 
-# start service in background here
+# starting services (docker run, docker start)
 /etc/init.d/bvat start
 
 if [[ $NOMYSQL -ne 1 ]];
