@@ -41,13 +41,13 @@ startConfiguration()
     fi
 
     # multisite configuration
-    if [[ $MULTISITE_ID -gt 1 ]];
+    if [[ "$MULTISITE_ID" -gt 1 ]];
     then
         find /etc/ -type f -exec sed -i "s/\/home\/bitrix\/www/\/home\/bitrix\/www${MULTISITE_ID}/g" {} \;
     fi
 
     # cyrillic encoding configuration (windows-1251)
-    if [[ $CYRILLIC_MODE -eq 1 ]];
+    if [[ "$CYRILLIC_MODE" -eq 1 ]];
     then
         sed -i '/mbstring.func_overload/c\mbstring.func_overload = 0' /etc/php.d/bitrixenv.ini
         sed -i '/mbstring.internal_encoding/c\mbstring.internal_encoding = cp1251' /etc/php.d/bitrixenv.ini
