@@ -64,7 +64,7 @@ fi
 # starting services (docker run, docker start)
 /etc/init.d/bvat start
 
-if [[ $NOMYSQL -ne 1 ]];
+if [[ "$NOMYSQL" -ne 1 ]];
 then
     service mysqld start
 fi
