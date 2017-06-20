@@ -24,6 +24,11 @@ startConfiguration()
     # setting memory limit for bitrix env (default: 256mb)
     sed -i "/AVAILABLE_MEMORY=/c\AVAILABLE_MEMORY=$BITRIX_MAX_MEMORY" /etc/init.d/bvat
 
+    mkdir /home/bitrix/mail
+    chown -R bitrix:bitrix /home/bitrix/mail
+
+    sed -i "/sendmail_path/c\sendmail_path = /bin/cat > \"/home/bitrix/mail/mail_\`date +\%Y-\%m-\%d_\%H-\%M-\%S\`\"" /etc/php.d/bitrixenv.ini
+
     echo "root:$ROOT_SSH_PASS" | chpasswd
     echo "bitrix:$BITRIX_SSH_PASS" | chpasswd
 

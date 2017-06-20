@@ -1,7 +1,7 @@
 FROM centos:6.6
 
 # setting right timezone
-ENV TIMEZONE="Europe/Minsk"
+ENV TIMEZONE="Europe/Moscow"
 
 # if you need php5, instead of php7, exec docker build command with "--build-arg IS_LEGACY_PHP=1"
 ARG IS_LEGACY_PHP
