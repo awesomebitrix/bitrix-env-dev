@@ -6,7 +6,7 @@ shutdownSystem()
 {  
     # stopping services (docker stop)
 
-    if [[ $NOMYSQL -ne 1 ]];
+    if [[ "$NOMYSQL" -ne 1 ]];
     then
         service mysqld stop
     fi
