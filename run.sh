@@ -24,11 +24,12 @@ startConfiguration()
     # setting memory limit for bitrix env (default: 256mb)
     sed -i "/AVAILABLE_MEMORY=/c\AVAILABLE_MEMORY=$BITRIX_MAX_MEMORY" /etc/init.d/bvat
 
+    # mail configuration
     mkdir /home/bitrix/mail
     chown -R bitrix:bitrix /home/bitrix/mail
-
     sed -i "/sendmail_path/c\sendmail_path = /bin/cat > \"/home/bitrix/mail/mail_\`date +\%Y-\%m-\%d_\%H-\%M-\%S\`\"" /etc/php.d/bitrixenv.ini
 
+    # ssh configuration
     echo "root:$ROOT_SSH_PASS" | chpasswd
     echo "bitrix:$BITRIX_SSH_PASS" | chpasswd
 
@@ -38,11 +39,13 @@ startConfiguration()
         echo "[xdebug]" > /etc/php.d/15-xdebug.ini && echo "zend_extension='/usr/lib64/php/modules/xdebug.so'" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_enable = 1" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_connect_back = 1" >> /etc/php.d/15-xdebug.ini && echo "xdebug.remote_autostart = 0" >> /etc/php.d/15-xdebug.ini
     fi
 
+    # multisite configuration
     if [[ $MULTISITE_ID -gt 1 ]];
     then
         find /etc/ -type f -exec sed -i "s/\/home\/bitrix\/www/\/home\/bitrix\/www${MULTISITE_ID}/g" {} \;
     fi
 
+    # cyrillic encoding configuration (windows-1251)
     if [[ $CYRILLIC_MODE -eq 1 ]];
     then
         sed -i '/mbstring.func_overload/c\mbstring.func_overload = 0' /etc/php.d/bitrixenv.ini
@@ -50,6 +53,7 @@ startConfiguration()
     fi
 }
 
+# starConfiguration function starts only once
 if [[ ! -f "/home/bitrix/configurationComplete" ]];
 then
     startConfiguration
