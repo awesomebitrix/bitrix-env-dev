@@ -88,11 +88,11 @@ pre_php(){
 	php56_conf=/etc/yum.repos.d/remi.repo
     php70_conf=/etc/yum.repos.d/remi-php70.repo
 
-    print "Disable php56 repository"
-    sed -i -e '/\[remi-php56\]/,/^\[/s/enabled=1/enabled=0/' $php56_conf
+    print "Enable php56 repository"
+    sed -i -e '/\[remi-php56\]/,/^\[/s/enabled=0/enabled=1/' $php56_conf
 
-    print "Enable php70 repository"
-    sed -i -e '/\[remi-php70\]/,/^\[/s/enabled=0/enabled=1/' $php70_conf
+    print "Disable php70 repository"
+    sed -i -e '/\[remi-php70\]/,/^\[/s/enabled=1/enabled=0/' $php70_conf
 
     is_xhprof=$(rpm -qa | grep -c php-pecl-xhprof)
     if [[ $is_xhprof -gt 0 ]]; then
