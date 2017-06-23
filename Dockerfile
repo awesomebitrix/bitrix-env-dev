@@ -6,10 +6,7 @@ ENV TIMEZONE="Europe/Moscow"
 # this is official bitrix-env install script for centos, but with my custom option to choose php version
 ADD bitrix-env.sh /tmp/
 RUN chmod +x /tmp/bitrix-env.sh
-RUN /tmp/bitrix-env.sh
-
-# installing ssh-server + useful apps
-RUN yum install -y openssh-server nano mc htop zip unzip screen
+RUN /tmp/bitrix-env.sh && yum install -y openssh-server nano mc htop zip unzip screen
 
 ENV BITRIX_MAX_MEMORY=262144
 
