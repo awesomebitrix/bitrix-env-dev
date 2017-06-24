@@ -85,7 +85,7 @@ configure_epel(){
 }
 
 pre_php(){
-	php56_conf=/etc/yum.repos.d/remi.repo
+    php56_conf=/etc/yum.repos.d/remi.repo
     php70_conf=/etc/yum.repos.d/remi-php70.repo
 
     print "Enable php56 repository"
