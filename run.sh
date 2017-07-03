@@ -27,7 +27,6 @@ startConfiguration()
 
     # mail configuration
     mkdir /home/bitrix/mail
-    chown -R bitrix:bitrix /home/bitrix/mail
     sed -i "/sendmail_path/c\sendmail_path = /bin/cat > \"/home/bitrix/mail/mail_\`date +\%Y-\%m-\%d_\%H-\%M-\%S\`\"" /etc/php.d/bitrixenv.ini
 
     # ssh configuration
@@ -52,6 +51,8 @@ startConfiguration()
         sed -i '/mbstring.func_overload/c\mbstring.func_overload = 0' /etc/php.d/bitrixenv.ini
         sed -i '/mbstring.internal_encoding/c\mbstring.internal_encoding = cp1251' /etc/php.d/bitrixenv.ini
     fi
+
+    chown -R bitrix:bitrix /home/bitrix/
 }
 
 # starConfiguration function starts only once
