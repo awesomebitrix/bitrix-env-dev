@@ -6,7 +6,7 @@ ENV TIMEZONE="Europe/Moscow"
 # this is official bitrix-env install script for centos, but with my custom option to choose php version
 ADD bitrix-env.sh /tmp/
 RUN chmod +x /tmp/bitrix-env.sh
-RUN /tmp/bitrix-env.sh && yum install -y openssh-server nano mc htop zip unzip screen
+RUN /tmp/bitrix-env.sh && yum install -y openssh-server nano mc htop zip unzip screen wget && wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo && curl --silent --location https://rpm.nodesource.com/setup_6.x | bash - && yum install -y yarn && yarn global add gulp
 
 ENV BITRIX_MAX_MEMORY=262144
 
