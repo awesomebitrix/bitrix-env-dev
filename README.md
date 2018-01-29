@@ -184,8 +184,8 @@ https://www.digitalocean.com/community/tutorials/docker-ubuntu-16-04-ru
 
 Чтобы с нашей рабочей машины обращаться к нашему контейнеру через доменное имя, а не через айпишник, добавим в свой `/etc/hosts` запись о хостнейме `project.local`:
 ```bash
-    $ su
-    echo "10.10.0.2 project.local" >> /etc/hosts
+    $ sudo su
+    # echo "10.10.0.2 project.local" >> /etc/hosts
 ```
 
 Создадим свою docker-сеть:
